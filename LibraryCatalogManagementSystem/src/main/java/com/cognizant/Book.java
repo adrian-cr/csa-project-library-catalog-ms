@@ -16,6 +16,7 @@ public class Book {
   public Book(String author, int availableCopies, HashSet<String> genres, String isbn, String title) {
     this.author = author;
     this.availableCopies = availableCopies;
+    this.genres.addAll(genres);
     this.isbn = isbn;
     this.title = title;
   }//Book - base constructor
