@@ -1,11 +1,32 @@
 package com.cognizant;
 
+import java.util.HashMap;
+
 import static java.lang.Integer.parseInt;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-  public String validateData(String dataType, Object data) {//returns message string if validation fails
+  public static Object manageCommand(Library library, String command, String searchMethod, Object data) {//returns Object if command has a return value and true otherwise
+    switch (command) {
+      case "add":
+        library.addBook((Book) data);
+        return true;
+      case "find":
+        HashMap<String, Object> searchParams = (HashMap<String, Object>) data;//format: {searchMethod=String, bookId=String}
+        return library.find((String) searchParams.get("searchMethod"), (String) searchParams.get("id"));
+      case "remove":
+          return library.remove(searchMethod, (String) data);
+      case "update":
+        HashMap<String, Object> updateParams = (HashMap<String, Object>) data;//format: {searchMethod=String, bookId=String, dataType=String, data=Object}
+          library.update((String) updateParams.get("searchMethod"), (String) updateParams.get("bookId"), (String) updateParams.get("dataType"), updateParams.get("data"));
+        return true;
+      case "view":
+        HashMap<String, Object> viewData = (HashMap<String, Object>) data;//format: {genreFilter:String, sortValue:String}
+        return library.viewCatalog((String) viewData.get("genreFilter"), (String) viewData.get("sortValue"));
+    }//switch
+    return null;
+  }//manageCommand()
+  
+  public static String validateData(String dataType, Object data) {//returns message string if validation fails
     try {
       switch (dataType) {
         case "author":
@@ -35,6 +56,6 @@ public class Main {
     }//catch
   }//validateData()
   public static void main(String[] args) {
-    
+    System.out.println("Hello");
   }
 }
