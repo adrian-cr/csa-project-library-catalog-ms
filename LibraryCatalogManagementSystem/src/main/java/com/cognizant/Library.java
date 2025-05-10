@@ -8,14 +8,21 @@ public class Library {
   
   public Library() {}
   
+  /* Getters: */
+  
+  public Set<String> getExistingGenres() {
+    return existingGenres;
+  }
+  
   /* Custom methods:*/
   public void addBook(Book book) {
+    existingGenres.addAll(book.getGenres());
     catalog.add(book);
   }//addBook()
   public Book findBook(String searchMethod, String id) {
     for (Book book : catalog) {
       String bookId = searchMethod.equals("isbn") ? book.getISBN() : book.getTitle();
-      if (bookId.equals(id)) return book;
+      if (bookId.equalsIgnoreCase(id)) return book;
     }
     return null;
   }//findBook()
@@ -39,8 +46,8 @@ public class Library {
           target.setAuthor((String) data);
           break;
         case "genre":
-          target.addGenre((String) data);
-          existingGenres.add((String) data);
+          target.addGenres((Set<String>) data);
+          existingGenres.addAll((Set<String>) data);
           break;
         case "title":
           target.setTitle((String)data);
@@ -71,4 +78,18 @@ public class Library {
     return sortedList;
   }//viewCatalog()
   
+  @Override
+  public String toString() {
+    List<Book> sortedCatalog = viewCatalog(null, "title");
+    if (!sortedCatalog.isEmpty()) {
+      String str= "[";
+      
+      for (Book book : sortedCatalog)
+        str += book.toString() + "\n\n";
+      str+="]";
+      return str;
+    }
+    return "[]";
+    
+  }
 }//Library

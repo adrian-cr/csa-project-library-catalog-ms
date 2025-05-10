@@ -1,9 +1,6 @@
 package com.cognizant;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Book {
   private String author;
@@ -56,8 +53,8 @@ public class Book {
   }//setTitle()
   
   /* Custom methods:*/
-  public void addGenre(String genre) {
-    genres.add(genre);
+  public void addGenres(Set<String> genres) {
+    genres.addAll(genres);
   }
   
   /* Overridden methods: */
@@ -72,12 +69,13 @@ public class Book {
   }//hashCode()
   @Override
   public String toString() {
-    return "Book{" +
-            "availableCopies=" + availableCopies +
-            ", author='" + author + '\'' +
-            ", genres='" + genres + '\'' +
-            ", isbn='" + isbn + '\'' +
-            ", title='" + title + '\'' +
-            '}';
+    String str = "\n  Title: \"" + title +"\"\n" +
+            "  Author: " + author + "\n" +
+            "  ISBN: " + isbn + "\n" +
+            "  Genres: ";
+    Iterator<String> genreIter = genres.iterator();
+    while (genreIter.hasNext()) str += genreIter.next() + (genreIter.hasNext()? ", " : "");
+    str += "\n  Copies available: " + availableCopies + "\n";
+    return str;
   }
 }
